@@ -14,8 +14,9 @@ const commentsRouter=express.Router()
 commentsRouter.get("/:id", async (req, res, next) => {
     try {
       const data = await readDB(commentsJsonPath)
-      let filteredData=data.filter(comment=>comment.BookID===req.params.id)
-     
+      console.log('data',data)
+      let filteredData=data.filter(comment=>comment.elementId===req.params.id)
+        console.log("filteredData",filteredData)
       res.send(filteredData)
     } catch (error) {
       console.log(error)
