@@ -1,14 +1,10 @@
 [
-    {
-        "BookID": "0316389706",
-        "UserName": "UN1",
-        "Text": "text1"
-    },
+    
     
     {
         "CommentID": "130nihwkc1ya2dg",
-        "BookID": "0316389706",
-        "UserName": "UN2",
-        "Text": "text2"
+        "elementId": "0316389706",
+        "rate": "UN2",
+        "comment": "text2"
     }
 ]
