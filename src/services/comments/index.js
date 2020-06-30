@@ -47,4 +47,34 @@ commentsRouter.get("/:id", async (req, res, next) => {
     }
   )
 
+  commentsRouter.delete("/:id",async(req,res)=>{
+    try {
+      const data = await readDB(commentsJsonPath)
+      const filteredData = data.filter(comment => comment.CommentID !== req.params.id)
+      await writeDB(commentsJsonPath, filteredData)
+      res.send("Deleted Sucessfully")
+    } catch (error) {
+      next(error)
+    }
+  })
+  commentsRouter.put("/:id",async(req,res)=>{
+    const comments = await readDB(commentsJsonPath)
+    const comment = comments.find((b) => b.CommentID === req.params.id)
+    try {
+      if (comment) {
+        const position = comments.indexOf(comment)
+        const reviewUpdated = { ...comment, ...req.body } // In this way we can also implement the "patch" endpoint
+        comments[position] = reviewUpdated
+        await writeDB(commentsJsonPath, comments)
+        res.status(200).send("Updated")
+      } else {
+        const error = new Error(`Comment with id ${req.params.id} not found`)
+        error.httpStatusCode = 404
+        next(error)
+      }
+    } catch (error) {
+      next(error)
+    }
+  })
+
   module.exports=commentsRouter
